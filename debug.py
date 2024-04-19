@@ -7,4 +7,4 @@ def debug(info,x = 10, y = 10):
     debug_surf = font.render(str(info),True,'White')
     debug_rect = debug_surf.get_rect(topleft = (x,y))
     pygame.draw.rect(display_surface,'Black',debug_rect)
-    display_surface.blit(debug_surf,debug_rect)
+    display_surface.blit(debug_surf,debug_rect) #ok neco nefacha

@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
 
         #special movements
         self.interacting = False
-        self.interacting_cooldown = 400
+        self.interacting_cooldown = 300
         self.interacting_time = None
 
         #animation set up
@@ -93,11 +93,9 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = 0
 
         #interacting
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and not self.interacting:
             self.interacting = True
             self.interacting_time = pygame.time.get_ticks()
-        else:
-            self.interacting = False
 
     def move(self,speed):
         if self.direction.magnitude() != 0: #38:40 COOOOOOOOO TOOOOO ZNAMENAAAAA!!!!!!!!
@@ -128,7 +126,7 @@ class Player(pygame.sprite.Sprite):
                     if self.direction.y < 0: #player is moving up
                         self.hitbox.top = sprite.hitbox.bottom
 
-    def cooldowns(self):  # sourcery skip: swap-nested-ifs
+    def cooldowns(self):
         current_time = pygame.time.get_ticks()
 
         if self.interacting:

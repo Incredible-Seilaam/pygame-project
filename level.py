@@ -49,21 +49,21 @@ class Level:
                             Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'object', surface)
 
         self.player = Player((2000,1430),[self.visible_sprites],self.obstacle_sprites) #time stamp 34.24
-
-        self.npc = NPC((2250,1430), [self.visible_sprites, self.obstacle_sprites])
+        
+        # self.npc = NPC((2250,1430), [self.visible_sprites, self.obstacle_sprites])
 
     def run(self):
         #updates and draws the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
 
-        self.player_npc_interaction()
+        # self.player_npc_interaction()
 
-    def player_npc_interaction(self):
-        if pygame.sprite.collide_rect(self.player, self.npc):
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
-                print('interacting')
+    # def player_npc_interaction(self):
+    #     if pygame.sprite.collide_rect(self.player, self.npc):
+    #         keys = pygame.key.get_pressed()
+    #         if keys[pygame.K_SPACE]:
+    #             print('interacting')
 
 #camera     ysort - sort podle y souradnice(možnost overlapovani spritu)
 class YsortCameraGroup(pygame.sprite.Group):    #predelani groupu

@@ -1,16 +1,16 @@
 import pygame
 from support import import_folder
 from npc import NPC
+from entity import Entity
 
-class Player(pygame.sprite.Sprite):
+class Player(Entity):
     def __init__(self,position,groups,obstacle_sprites):
         super().__init__(groups)        #super() -> allows usage of methods and properties from a parent class
         self.image = pygame.image.load('graphics/player/down/down_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
         self.hitbox = self.rect.inflate(-10,-26)
 
-        #movemnts
-        self.direction = pygame.math.Vector2()
+        #direction
         self.speed = 5
 
         #special movements
@@ -21,8 +21,6 @@ class Player(pygame.sprite.Sprite):
         #animation set up
         self.player_assets()
         self.status = 'down'
-        self.frame_index = 0
-        self.animation_speed = 0.15
 
         self.obstacle_sprites = obstacle_sprites
 
@@ -97,34 +95,9 @@ class Player(pygame.sprite.Sprite):
             self.interacting = True
             self.interacting_time = pygame.time.get_ticks()
 
-    def move(self,speed):
-        if self.direction.magnitude() != 0: #38:40 COOOOOOOOO TOOOOO ZNAMENAAAAA!!!!!!!!
-            self.direction = self.direction.normalize()
+#move method
 
-        self.hitbox.x += self.direction.x * speed
-        self.collision('horizontal')
-        self.hitbox.y += self.direction.y * speed
-        self.collision('vertical')
-        self.rect.center = self.hitbox.center
-
-        #self.rect.center += self.direction * speed #self.speed - enemaci by meli stejnej speed a to nechceme 
-    
-    def collision(self, direction):
-        if direction == 'horizontal':
-            for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):
-                    if self.direction.x > 0: #player is moving to the right
-                        self.hitbox.right = sprite.hitbox.left
-                    if self.direction.x < 0: #player is moving to the left
-                        self.hitbox.left = sprite.hitbox.right
-        
-        if direction == 'vertical':
-            for sprite in self.obstacle_sprites:
-                if sprite.hitbox.colliderect(self.hitbox):
-                    if self.direction.y > 0: #player is moving down
-                        self.hitbox.bottom = sprite.hitbox.top
-                    if self.direction.y < 0: #player is moving up
-                        self.hitbox.top = sprite.hitbox.bottom
+#collision method
 
     def cooldowns(self):
         current_time = pygame.time.get_ticks()

@@ -4,7 +4,7 @@ from npc import NPC
 from entity import Entity
 
 class Player(Entity):
-    def __init__(self,position,groups,obstacle_sprites):
+    def __init__(self, position, groups, obstacle_sprites):
         super().__init__(groups)        #super() -> allows usage of methods and properties from a parent class
         self.image = pygame.image.load('graphics/player/down/down_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
@@ -17,6 +17,7 @@ class Player(Entity):
         self.interacting = False
         self.interacting_cooldown = 300
         self.interacting_time = None
+        # self.create_attack = create_attack
 
         #animation set up
         self.player_assets()

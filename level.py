@@ -8,15 +8,18 @@ from random import choice
 from debug import *
 from npc import *
 from enemy import Enemy
+# from weapon import Weapon
 
 class Level:
     def __init__(self):
         #get the display surface, can call from anywhere
         self.display_surface = pygame.display.get_surface()
+
         #sprite group setup
         self.visible_sprites = YsortCameraGroup() #every visible sprite
         self.obstacle_sprites = pygame.sprite.Group() #every sprite the player will/can collide with
         self.npc_sprites = pygame.sprite.Group()
+
         #sprite setup
         self.create_map()
 
@@ -56,14 +59,18 @@ class Level:
                                     (x,y),
                                     [self.visible_sprites],
                                     self.obstacle_sprites)
+                                    # self.create_attack)
                             else:
-                                if col == '390': monster_name = 'bamboo'
-                                elif col == '391': monster_name = 'spirit'
-                                elif col == '392': monster_name = 'raccoon'
-                                elif col == '393': monster_name = 'squid'
+                                if col == '390': monster_name = 'maya'
+                                elif col == '391': monster_name = 'kaya'
+                                elif col == '392': monster_name = 'dietrich'
+                                #elif col == '393': monster_name = 'squid'
                                 Enemy(monster_name,(x, y), 
                                     [self.visible_sprites], 
                                     self.obstacle_sprites)
+
+    # def create_attack(self):
+    #     Weapon(self.player, [self.visible_sprites])
 
     def run(self):
         #updates and draws the game

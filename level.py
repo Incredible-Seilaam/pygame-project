@@ -60,12 +60,16 @@ class Level:
                                 if col == '390': monster_name = 'bamboo'
                                 elif col == '391': monster_name = 'spirit'
                                 elif col == '392': monster_name = 'raccoon'
-                                Enemy(monster_name,(x, y), [self.visible_sprites])
+                                elif col == '393': monster_name = 'squid'
+                                Enemy(monster_name,(x, y), 
+                                    [self.visible_sprites], 
+                                    self.obstacle_sprites)
 
     def run(self):
         #updates and draws the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
+        self.visible_sprites.enemy_update(self.player)
 
 #camera     ysort - sort podle y souradnice(možnost overlapovani spritu)
 class YsortCameraGroup(pygame.sprite.Group):    #predelani groupu
@@ -94,3 +98,10 @@ class YsortCameraGroup(pygame.sprite.Group):    #predelani groupu
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image,offset_pos)
+
+    def enemy_update(self, player):
+        enemy_sprites = [sprite 
+                        for sprite in self.sprites()
+                            if hasattr(sprite,'sprite_type') and sprite.sprite_type == 'enemy']
+        for enemy in enemy_sprites:
+            enemy.enemy_update(player)

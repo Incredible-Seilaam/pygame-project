@@ -31,6 +31,11 @@ class Enemy(Entity):
         self.notice_radius = monster_info['notice_radius']
         self.attack_type = monster_info['attack_type']
 
+        #player interaction
+        self.can_attack = True
+        self.attack_time = None
+        self.attack_cooldown = 400
+
     def import_graphics(self, name):
         self.animations = {'idle':[], 'move':[], 'attack':[]}
         main_path = f'graphics/monsters/{name}/'
@@ -53,7 +58,9 @@ class Enemy(Entity):
     def get_status(self, player):
         distance = self.find_player(player)[0]
 
-        if distance <= self.attack_radius:
+        if distance <= self.attack_radius and self.can_attack:
+            if self.status != 'attack':
+                self.frame_index = 0
             self.status = 'attack'
         elif distance <= self.notice_radius:
             self.status = 'move'
@@ -74,14 +81,24 @@ class Enemy(Entity):
         #loop over frames
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
+            self.attack_time = pygame.time.get_ticks()
+            if self.status == 'attack':
+                self.can_attack = False
             self.frame_index = 0    #resetne hodnotu indexu na 0
         #frames
         self.image = animation[int(self.frame_index)] #int, protoze iterujeme floatem a bez toho by se python zlobil
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
+    def cooldown(self):
+        if not self.can_attack:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.attack_time >= self.attack_cooldown:
+                self.can_attack = True
+
     def update(self):
         self.move(self.speed)
         self.animate()
+        self.cooldown()
 
     def enemy_update(self, player):
         self.get_status(player)

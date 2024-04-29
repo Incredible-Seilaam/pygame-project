@@ -61,10 +61,10 @@ class Level:
                                     self.obstacle_sprites)
                                     # self.create_attack)
                             else:
-                                if col == '390': monster_name = 'maya'
-                                elif col == '391': monster_name = 'kaya'
-                                elif col == '392': monster_name = 'dietrich'
-                                #elif col == '393': monster_name = 'squid'
+                                if col == '390': monster_name = 'bamboo'
+                                elif col == '391': monster_name = 'spirit'
+                                elif col == '392': monster_name = 'raccoon'
+                                elif col == '393': monster_name = 'squid'
                                 Enemy(monster_name,(x, y), 
                                     [self.visible_sprites], 
                                     self.obstacle_sprites)

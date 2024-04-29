@@ -37,8 +37,8 @@ class Enemy(Entity):
         self.attack_cooldown = 400
 
     def import_graphics(self, name):
-        self.animations = {'idle':[]} #, 'move':[], 'attack':[]
-        main_path = f'graphics/npc/{name}/'
+        self.animations = {'idle':[], 'move':[], 'attack':[]}
+        main_path = f'graphics/monsters/{name}/'
 
         for animation in self.animations.keys():
             self.animations[animation] = import_folder(main_path + animation)
@@ -59,12 +59,12 @@ class Enemy(Entity):
         distance = self.find_player(player)[0]
 
         if distance <= self.attack_radius and self.can_attack:
-        #     if self.status != 'attack':
-        #         self.frame_index = 0
-        #     self.status = 'attack'
-        # elif distance <= self.notice_radius:
-        #     self.status = 'move'
-        # else:
+            if self.status != 'attack':
+                self.frame_index = 0
+            self.status = 'attack'                    #TOHLE SE POTREBUJE FIXNOUT
+        elif distance <= self.notice_radius:
+            self.status = 'move'
+        else:
             self.status = 'idle'
 
     def actions(self, player):

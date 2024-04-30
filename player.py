@@ -34,6 +34,7 @@ class Player(Entity):
             'up_idle':[], 'down_idle':[], 'left_idle':[], 'right_idle':[],
             'up_interacting':[], 'down_interacting':[],
             'left_interacting':[], 'right_interacting':[],
+            'up_attack':[], 'down_attack':[], 'left_attack':[], 'right_attack':[]
         }
 
         for animation in self.animations.keys():
@@ -70,31 +71,32 @@ class Player(Entity):
                 self.status = self.status.replace('_interacting','')
 
     def player_input(self):
-        keys = pygame.key.get_pressed()
+        if not self.interacting:
+            keys = pygame.key.get_pressed()
 
-        #movement input
-        if keys[pygame.K_w]:
-            self.direction.y = -1   #up
-            self.status = 'up'
-        elif keys[pygame.K_s]:
-            self.direction.y = 1    #down
-            self.status = 'down'
-        else:
-            self.direction.y = 0
+            #movement input
+            if keys[pygame.K_w]:
+                self.direction.y = -1   #up
+                self.status = 'up'
+            elif keys[pygame.K_s]:
+                self.direction.y = 1    #down
+                self.status = 'down'
+            else:
+                self.direction.y = 0
 
-        if keys[pygame.K_a]:
-            self.direction.x = -1   #left
-            self.status = 'left'
-        elif keys[pygame.K_d]:
-            self.direction.x = 1    #right
-            self.status = 'right'
-        else:
-            self.direction.x = 0
+            if keys[pygame.K_a]:
+                self.direction.x = -1   #left
+                self.status = 'left'
+            elif keys[pygame.K_d]:
+                self.direction.x = 1    #right
+                self.status = 'right'
+            else:
+                self.direction.x = 0
 
-        #interacting
-        if keys[pygame.K_SPACE] and not self.interacting:
-            self.interacting = True
-            self.interacting_time = pygame.time.get_ticks()
+            #interacting
+            if keys[pygame.K_SPACE]:
+                self.interacting = True
+                self.interacting_time = pygame.time.get_ticks()
 
 #move method
 

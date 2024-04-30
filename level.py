@@ -25,10 +25,10 @@ class Level:
 
     def create_map(self):   #time stamp 24:38
         layout = {
-            'boundary': import_csv_layout('map/map_FloorBlocks.csv'),
-            'grass': import_csv_layout('map/map_Grass.csv'),
-            'object': import_csv_layout('map/map_Objects.csv'),
-            'entities': import_csv_layout('map/map_Entities.csv')
+            'boundary': import_csv_layout('map/final_map__FloorBlocks.csv'),
+            'grass': import_csv_layout('map/final_map__Grass.csv'),
+            'object': import_csv_layout('map/final_map__Objects.csv'),
+            'entities': import_csv_layout('map/final_map__Entities.csv')
         }
         
         graphics = {
@@ -54,20 +54,26 @@ class Level:
                             Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'object', surface)
 
                         if style == 'entities':
-                            if col == '394':
+                            if col == '10':
                                 self.player = Player(
                                     (x,y),
                                     [self.visible_sprites],
                                     self.obstacle_sprites)
                                     # self.create_attack)
                             else:
-                                if col == '390': monster_name = 'bamboo'
-                                elif col == '391': monster_name = 'spirit'
-                                elif col == '392': monster_name = 'raccoon'
-                                elif col == '393': monster_name = 'squid'
+                                if col == '6': monster_name = 'bamboo'
+                                elif col == '7': monster_name = 'spirit'
+                                elif col == '8': monster_name = 'raccoon'
+                                elif col == '9': monster_name = 'squid'
                                 Enemy(monster_name,(x, y), 
                                     [self.visible_sprites], 
                                     self.obstacle_sprites)
+                            # #else:
+                            #     if col == 'cislo': npc_name = 'npc_name'
+                            #     NPC(npc_name,(x,y),
+                            #         [self.visible_sprites],
+                            #         self.obstacle_sprites)
+
 
     # def create_attack(self):
     #     Weapon(self.player, [self.visible_sprites])
@@ -89,7 +95,7 @@ class YsortCameraGroup(pygame.sprite.Group):    #predelani groupu
         self.offset = pygame.math.Vector2()
 
         #map floor texture
-        self.floor_surface = pygame.image.load('graphics/tilemap/ground.png').convert()
+        self.floor_surface = pygame.image.load('graphics/tilemap/final_map.png').convert()
         self.floor_rect = self.floor_surface.get_rect(topleft = (0,0))
 
     def custom_draw(self,player):

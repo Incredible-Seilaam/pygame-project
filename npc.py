@@ -33,11 +33,11 @@ class NPC(Entity):
         self.interaction_cooldown = 400
 
     def import_graphics(self, name):
-        self.animations = {'idle':[], 'move':[], 'interact':[]}
+        self.animations = {'idle':[], 'interact':[], 'move':[]}
         main_path = f'graphics/npc/{name}/'
 
         for animation in self.animations.keys():
-            self.animation_speed[animation] = import_folder(main_path + animation)
+            self.animations[animation] = import_folder(main_path + animation)
     
     def find_player(self, player):
         npc_vec = pygame.math.Vector2(self.rect.center)
@@ -55,16 +55,16 @@ class NPC(Entity):
         distance = self.find_player(player)[0]
 
         if distance <= self.interaction_radius and self.can_interact:
-            if self.status != 'interacting':
+            if self.status != 'interact':
                 self.frame_index = 0
-            self.status = 'interacting'
+            self.status = 'interact'
         elif distance <= self.notice_radius:
             self.status = 'move'
         else:
             self.status = 'idle'
 
     def interactions(self, player):
-        if self.status == 'interacting':
+        if self.status == 'interact':
             print('interacting')
         elif self.status == 'move':
             self.direction = self.find_player(player)[1]
@@ -78,7 +78,7 @@ class NPC(Entity):
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
             self.interaction_time = pygame.time.get_tics()
-            if self.status == 'interacting':
+            if self.status == 'interact':
                 self.can_interact = False
             self.frame_index = 0
         

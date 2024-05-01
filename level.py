@@ -59,24 +59,34 @@ class Level:
                                     (x,y),
                                     [self.visible_sprites],
                                     self.obstacle_sprites)
-                                    # self.create_attack)
                             else:
                                 if col == '6': monster_name = 'bamboo'
                                 elif col == '7': monster_name = 'spirit'
                                 elif col == '8': monster_name = 'raccoon'
                                 elif col == '9': monster_name = 'squid'
-                                Enemy(monster_name,(x, y), 
-                                    [self.visible_sprites], 
-                                    self.obstacle_sprites)
+                                elif col in {'0', '1', '2', '3', '4'}:  # NPC types
+                                    npc_name = {'0': 'kaya', '1': 'dietrich', '2': 'maya', '3': 'laura', '4': 'rin'}[col]
+                                    NPC(npc_name, (x, y), [self.visible_sprites], self.obstacle_sprites)
+                                    
+                                if col in {'6', '7', '8', '9'}:
+                                    Enemy(monster_name, (x, y), [self.visible_sprites], self.obstacle_sprites)
+                            # else:
+                            #     if col == '6': monster_name = 'bamboo'
+                            #     elif col == '7': monster_name = 'spirit'
+                            #     elif col == '8': monster_name = 'raccoon'
+                            #     elif col == '9': monster_name = 'squid'
+                            #     Enemy(monster_name,(x, y), 
+                            #         [self.visible_sprites], 
+                            #         self.obstacle_sprites)
                             
-                                if col == '0' : npc_name = 'kaya'
-                                elif col == '1': npc_name = 'dietrich'
-                                elif col == '2':npc_name = 'maya'
-                                elif col == '3':npc_name = 'laura'
-                                elif col == '4':npc_name = 'rin'
-                                NPC(npc_name,(x, y),
-                                    [self.visible_sprites],
-                                    self.obstacle_sprites)
+                            #     if col == '0' : npc_name = 'kaya'
+                            #     elif col == '1': npc_name = 'dietrich'
+                            #     elif col == '2':npc_name = 'maya'
+                            #     elif col == '3':npc_name = 'laura'
+                            #     elif col == '4':npc_name = 'rin'
+                            #     NPC(npc_name,(x, y),
+                            #         [self.visible_sprites],
+                            #         self.obstacle_sprites)
 
 
 

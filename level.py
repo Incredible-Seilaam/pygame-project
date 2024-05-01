@@ -6,7 +6,7 @@ from player import Player
 from support import *
 from random import choice
 from debug import *
-from npc import *
+from npc import NPC
 from enemy import Enemy
 # from weapon import Weapon
 
@@ -68,11 +68,16 @@ class Level:
                                 Enemy(monster_name,(x, y), 
                                     [self.visible_sprites], 
                                     self.obstacle_sprites)
-                            # #else:
-                            #     if col == 'cislo': npc_name = 'npc_name'
-                            #     NPC(npc_name,(x,y),
-                            #         [self.visible_sprites],
-                            #         self.obstacle_sprites)
+                            
+                                if col == '0' : npc_name = 'kaya'
+                                elif col == '1': npc_name = 'dietrich'
+                                elif col == '2':npc_name = 'maya'
+                                elif col == '3':npc_name = 'laura'
+                                elif col == '4':npc_name = 'rin'
+                                NPC(npc_name,(x, y),
+                                    [self.visible_sprites],
+                                    self.obstacle_sprites)
+
 
 
     # def create_attack(self):
@@ -118,3 +123,10 @@ class YsortCameraGroup(pygame.sprite.Group):    #predelani groupu
                             if hasattr(sprite,'sprite_type') and sprite.sprite_type == 'enemy']
         for enemy in enemy_sprites:
             enemy.enemy_update(player)
+
+    def npc_update(self, player):
+        npc_sprites = [sprite
+                        for sprite in self.sprites()
+                            if hasattr(sprite, 'sprite_type') and sprite.sprite_type == 'npc']
+        for npc in npc_sprites:
+            npc.npc_sprites(player)

@@ -21,8 +21,11 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_m:
+                        self.level.toggle_menu()
 
-            self.screen.fill((62,84,60)) #bud str se jmenem barvy nebo rgb tuple POZDEJS PRIDAM MAPU B)
+            self.screen.fill(WATER_COLOR) #bud str se jmenem barvy nebo rgb tuple POZDEJS PRIDAM MAPU B)
             self.level.run()    #zavolá si metodu run definovanou v třídě Level
             pygame.display.update()
             self.clock.tick(FPS)

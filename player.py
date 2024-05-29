@@ -4,7 +4,7 @@ from support import import_folder
 from entity import Entity
 
 class Player(Entity):
-    def __init__(self, position, groups, obstacle_sprites, create_attack, destroy_attack, create_magic):
+    def __init__(self, position, groups, obstacle_sprites, create_attack, destroy_attack, create_magic): #create_interaction, destroy_interaction
         super().__init__(groups)        #super() -> allows usage of methods and properties from a parent class
         self.image = pygame.image.load('graphics/player/down/down_0.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
@@ -20,6 +20,14 @@ class Player(Entity):
         self.attack_time = None
 
         self.obstacle_sprites = obstacle_sprites
+
+        # #interaction
+        # self.create_interaction = create_interaction
+        # self.destroy_interaction = destroy_interaction
+        # self.interacting = False
+        # self.can_interact = True
+        # self.interaction_cooldown = 400
+        # self.interaction_time = None
 
 		# weapon
         self.create_attack = create_attack
@@ -88,6 +96,12 @@ class Player(Entity):
                 self.status = 'right'
             else:
                 self.direction.x = 0
+            
+            # #interaction input
+            # if keys[pygame.K_SPACE]:
+            #     self.interacting = True
+            #     self.attack_time = pygame.time.get_ticks()
+            #     self.create_interaction()
 
             #attack input
             if keys[pygame.K_f]:
@@ -129,11 +143,6 @@ class Player(Entity):
 
                 self.magic = list(magic_data.keys())[self.magic_index]
 
-            # #interacting
-            # if keys[pygame.K_SPACE]:
-            #     self.interacting = True
-            #     self.interacting_time = pygame.time.get_ticks()
-
     def get_status(self):
         #idle
         if self.direction.x == 0 and self.direction.y == 0:
@@ -148,12 +157,33 @@ class Player(Entity):
                     self.status = self.status.replace('_idle','_attack')
                 else:
                     self.status = self.status + '_attack'
-        else:
-            if 'attack' in self.status:
-                self.status = self.status.replace('_attack','')
+
+        # # Interacting
+        # if self.interacting:
+        #     self.direction.x = 0
+        #     self.direction.y = 0
+        #     if 'interacting' not in self.status:
+        #         if 'idle' in self.status:
+        #             self.status = self.status.replace('_idle', '_interacting')
+        #         elif 'attack' in self.status:
+        #             self.status = self.status.replace('_attack', '_interacting')
+        #         else:
+        #             self.status += '_interacting'
+        
+        # # Not attacking or interacting
+        # if not self.attacking and not self.interacting:
+        #     if 'attack' in self.status:
+        #         self.status = self.status.replace('_attack', '')
+        #     elif 'interacting' in self.status:
+        #         self.status = self.status.replace('_interacting', '')
 
     def cooldowns(self):
         current_time = pygame.time.get_ticks()
+
+        # if self.interacting:
+        #     if current_time - self.interaction_time >= self.interaction_cooldown:
+        #         self.interacting = False
+        #         self.destroy_interaction()
 
         if self.attacking:
             if current_time - self.attack_time >= self.attack_cooldown + weapon_data[self.weapon]['cooldown']:
@@ -213,6 +243,32 @@ class Player(Entity):
         else:
             self.energy = self.stats['energy']
 
+    # def check_interaction(self):
+    #     # Check if the SPACE key is pressed and the player is not already interacting
+    #     keys = pygame.key.get_pressed()
+    #     if keys[pygame.K_SPACE] and not self.interacting:
+    #         # Loop through NPCs to find the nearest one within interaction range
+    #         nearest_npc = None
+    #         nearest_distance = float('inf')  # Initialize with a large value
+
+    #         for npc in self.npcs:
+    #             distance = self.rect.distance_to(npc.rect)
+    #             if distance < self.interaction_range and distance < nearest_distance:
+    #                 nearest_npc = npc
+    #                 nearest_distance = distance
+
+    #         # If a nearest NPC is found, interact with it
+    #         if nearest_npc:
+    #             self.interact(nearest_npc)
+
+    # def interact(self, npc):
+    #     # Trigger interaction with the specified NPC
+    #     current_time = pygame.time.get_ticks()
+    #     if current_time - self.last_interaction_time >= self.interaction_cooldown:
+    #         self.interacting = True
+    #         self.create_interaction(npc)
+    #         self.last_interaction_time = current_time
+
     def update(self):
         self.player_input()
         self.cooldowns()
@@ -220,3 +276,4 @@ class Player(Entity):
         self.animation()
         self.move(self.stats['speed'])
         self.energy_recovery()
+        # self.check_interaction()

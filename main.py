@@ -7,11 +7,11 @@ class Game:
         
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption('Prosim funguj o.o')
+        pygame.display.set_caption('Nejlepsi hra na celym svete')
         self.clock = pygame.time.Clock()
 
         pygame.mixer.music.load('audio/harvest dawn.mp3')
-        pygame.mixer.music.play(-1)  # -1 means loop indefinitely
+        pygame.mixer.music.play(-1)
 
         self.level = Level()
 
@@ -25,8 +25,8 @@ class Game:
                     if event.key == pygame.K_m:
                         self.level.toggle_menu()
 
-            self.screen.fill(WATER_COLOR) #bud str se jmenem barvy nebo rgb tuple POZDEJS PRIDAM MAPU B)
-            self.level.run()    #zavolá si metodu run definovanou v třídě Level
+            self.screen.fill(WATER_COLOR)
+            self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)
 

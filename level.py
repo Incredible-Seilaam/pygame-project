@@ -43,11 +43,11 @@ class Level:
 
     def create_map(self):   #time stamp 24:38
         layout = {
-            'boundary': import_csv_layout('map_fix/map_final_fix4_CollisionBlocks.csv'),
-            'grass': import_csv_layout('map_fix/map_final_fix4_Grass.csv'),
-            'object': import_csv_layout('map_fix/map_final_fix4_Objects.csv'),      #FIX CSV FILE, ted je tam to stary co funguje
-            'entities': import_csv_layout('map_fix/map_final_fix4_Entities.csv'),
-            'npcs': import_csv_layout('map_fix/map_final_fix4_Npcs.csv')
+            'boundary': import_csv_layout('map/map_final_fix5_CollisionBlocks.csv'),
+            'grass': import_csv_layout('map/map_final_fix5_Grass.csv'),
+            'object': import_csv_layout('map/map_final_fix5_Objects.csv'),      #FIX CSV FILE, ted je tam to stary co funguje
+            'entities': import_csv_layout('map/map_final_fix5_Entities.csv'),
+            'npcs': import_csv_layout('map/map_final_fix5_Npcs.csv')
         }
         
         graphics = {

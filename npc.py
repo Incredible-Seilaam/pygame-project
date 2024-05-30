@@ -51,14 +51,13 @@ class NPC(Entity):
         player_vec = pygame.math.Vector2(player.rect.center)
 
         distance = (player_vec - npc_vec).magnitude()
-        if self.status == 'attacking':
-            direction = pygame.math.Vector2()[0]
+        if self.status == 'attack':
+            direction = pygame.math.Vector2()
         else:
             if distance > 0:
                 direction = (player_vec - npc_vec).normalize() #matematický čáry máry
             else:
-                direction = pygame.math.Vector2()
-            
+                direction = pygame.math.Vector2()    
         return(distance, direction)
     
     def get_status(self, player):
@@ -75,7 +74,9 @@ class NPC(Entity):
 
     def actions(self, player):
         if self.status == 'attack':
-            print('attacking')
+            input('bla bla bla: ')
+            print('ble ble ble')
+            self.direction = self.find_player(player)[1]
         elif self.status == 'move':
             self.direction = self.find_player(player)[1]
         else:

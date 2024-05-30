@@ -108,6 +108,8 @@ class Level:
                             elif col == '3':npc_name = 'laura'
                             elif col == '4':npc_name = 'rin'
                             NPC(npc_name, (x, y), [self.visible_sprites], self.obstacle_sprites)
+                            #NPC('kaya', (x, y), [self.visible_sprites], self.obstacle_sprites)
+
 
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
